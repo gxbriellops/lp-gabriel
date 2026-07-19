@@ -1,0 +1,105 @@
+.background {
+  background:
+    radial-gradient(circle at 76% 46%, rgb(5 79 250 / 78%) 0%, rgb(5 79 250 / 34%) 20%, rgb(5 79 250 / 0%) 47%),
+    radial-gradient(circle at 58% 18%, rgb(117 160 255 / 42%) 0%, rgb(117 160 255 / 0%) 35%),
+    #f9f9f7;
+  inset: 0;
+  mask-image: linear-gradient(to bottom, black 0%, black 67%, transparent 100%);
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 67%, transparent 100%);
+  z-index: 0;
+}
+
+.shader {
+  animation: shader-drift 18s ease-in-out infinite alternate;
+  height: 100%;
+  opacity: 0.9;
+  transform: scale(1.08) translate3d(-1%, -1%, 0);
+  transform-origin: center;
+  width: 100%;
+  will-change: transform;
+}
+
+.mobileOrb,
+.mobileOrbSecondary {
+  border-radius: 50%;
+  display: none;
+  filter: blur(18px);
+  position: absolute;
+  will-change: transform;
+}
+
+@keyframes shader-drift {
+  from {
+    transform: scale(1.08) translate3d(-1%, -1%, 0);
+  }
+
+  to {
+    transform: scale(1.17) translate3d(3%, 2%, 0);
+  }
+}
+
+@keyframes mobile-orb-drift {
+  0% {
+    transform: translate3d(-8%, -4%, 0) scale(0.9);
+  }
+
+  50% {
+    transform: translate3d(13%, 8%, 0) scale(1.08);
+  }
+
+  100% {
+    transform: translate3d(-2%, 20%, 0) scale(0.96);
+  }
+}
+
+@keyframes mobile-orb-secondary-drift {
+  from {
+    transform: translate3d(10%, 12%, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(-18%, -12%, 0) scale(1.24);
+  }
+}
+
+@media (max-width: 767px) {
+  .background {
+    background: #f9f9f7;
+  }
+
+  .shader {
+    animation-duration: 8s;
+    opacity: 0.78;
+  }
+
+  .mobileOrb {
+    animation: mobile-orb-drift 7s ease-in-out infinite;
+    background: radial-gradient(circle, rgb(5 79 250 / 82%) 0%, rgb(5 79 250 / 42%) 42%, transparent 72%);
+    display: block;
+    height: 120vw;
+    left: 18%;
+    top: 18%;
+    width: 120vw;
+  }
+
+  .mobileOrbSecondary {
+    animation: mobile-orb-secondary-drift 9s ease-in-out infinite alternate;
+    background: radial-gradient(circle, rgb(117 160 255 / 58%) 0%, rgb(117 160 255 / 20%) 46%, transparent 72%);
+    display: block;
+    height: 88vw;
+    left: -28%;
+    top: 4%;
+    width: 88vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shader,
+  .mobileOrb,
+  .mobileOrbSecondary {
+    animation: none;
+  }
+}
