@@ -1,15 +1,25 @@
 "use client";
-
 import Image from "next/image";
 import { useState } from "react";
 import { GradientBackground } from "@/components/ui/paper-design-shader-background";
 import styles from "./page.module.css";
+import { ContactFooter } from "@/app/contact_footer";
 
 const navigationLinks = [
   { label: "INÍCIO", href: "#inicio" },
   { label: "LABORATÓRIO", href: "#laboratorio" },
   { label: "CONTATO", href: "#contato" },
 ];
+
+const whatsappNumber = "5583986080850";
+
+function whatsappUrl(message: string) {
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
+const conversationWhatsappHref = whatsappUrl(
+  "Olá! Vim pelo site da Manifesto e gostaria de agendar uma conversa sobre uma solução para o meu negócio.",
+);
 
 const processSteps = [
   {
@@ -52,7 +62,9 @@ const caseStudies = [
     description:
       "Uma landing page orientada à conversão, com proposta de valor direta, hierarquia objetiva e menos atrito até o contato.",
     results: ["NARRATIVA MAIS CLARA", "MENOS PASSOS ATÉ O LEAD"],
-    href: "#contato",
+    href: whatsappUrl(
+      "Olá! Vim pelo site da Manifesto e quero conversar sobre uma landing page mais clara e orientada à conversão.",
+    ),
     previewLabel: "CASE_01 / LANDING PAGE",
   },
   {
@@ -62,7 +74,9 @@ const caseStudies = [
     description:
       "Reposicionamento digital para transformar um serviço técnico em uma experiência simples, confiável e pronta para gerar oportunidades.",
     results: ["MENSAGEM MAIS OBJETIVA", "MAIOR PERCEPÇÃO DE VALOR"],
-    href: "#contato",
+    href: whatsappUrl(
+      "Olá! Vim pelo site da Manifesto e quero conversar sobre posicionamento digital para o meu negócio.",
+    ),
     previewLabel: "CASE_02 / LANDING PAGE",
   },
 ];
@@ -70,19 +84,24 @@ const caseStudies = [
 const contactLinks = [
   {
     icon: "✉",
-    label: "contato@manifesto.dev",
-    href: "mailto:contato@manifesto.dev",
+    label: "gabriellopes.ct07@gmail.com",
+    href: "mailto:gabriellopes.ct07@gmail.com",
   },
   {
     icon: "●",
-    label: "github.com/manifesto-dev",
-    href: "https://github.com/manifesto-dev",
+    label: "github.com/gxbriellops",
+    href: "https://github.com/gxbriellops?tab=repositories",
   },
   {
-    icon: "in",
-    label: "linkedin.com/in/manifesto-dev",
-    href: "https://linkedin.com/in/manifesto-dev",
+    icon: "☎",
+    label: "WhatsApp",
+    href: "https://wa.me/5583986080850",
   },
+  {
+    icon: "◎",
+    label: "Instagram",
+    href: "https://instagram.com/gabriellopesct",
+  }
 ];
 
 function Glow({
@@ -114,20 +133,33 @@ function Header() {
         MANIFESTO
       </a>
 
-      <nav className={styles.navigation} aria-label="Navegação principal">
-        {navigationLinks.map((link) => (
-          <a href={link.href} key={link.href}>
-            {link.label}
-          </a>
-        ))}
-        <Image
-          className={styles.navDot}
-          src="/assets/manifesto/nav-dot-home.svg"
-          alt=""
-          width={9}
-          height={9}
-        />
-      </nav>
+      <div className={styles.headerActions}>
+        <nav className={styles.navigation} aria-label="Navegação principal">
+          {navigationLinks.map((link) => (
+            <a href={link.href} key={link.href}>
+              {link.label}
+            </a>
+          ))}
+          <Image
+            className={styles.navDot}
+            src="/assets/manifesto/nav-dot-home.svg"
+            alt=""
+            width={9}
+            height={9}
+          />
+        </nav>
+
+        <a
+          className={styles.headerCta}
+          href={conversationWhatsappHref}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className={styles.headerCtaLong}>AGENDAR UMA CONVERSA</span>
+          <span className={styles.headerCtaShort}>CONVERSAR</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
 
       <button
         className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ""}`}
@@ -167,7 +199,12 @@ function Header() {
 
 function PrimaryCta() {
   return (
-    <a className={styles.primaryCta} href="mailto:contato@manifesto.dev">
+    <a
+      className={styles.primaryCta}
+      href={conversationWhatsappHref}
+      target="_blank"
+      rel="noreferrer"
+    >
       <span>AGENDAR UMA CONVERSA</span>
       <span className={styles.ctaArrow} aria-hidden="true">
         →
@@ -188,8 +225,7 @@ function HeroSection() {
           <br />A RESOLVER PROBLEMAS.
         </h1>
         <p className={styles.heroCopy}>
-          O mais alto grau de excelência é entender o problema, eliminar a
-          complexidade e entregar a solução mais eficiente.
+          transformando complexidade em resultados claros, elegantes e processos que realmente funcionam.
         </p>
         <PrimaryCta />
       </div>
@@ -200,16 +236,15 @@ function HeroSection() {
         <div>
           <p className={styles.eyebrow}>{"// MANIFESTO"}</p>
           <h2>
-            SOFTWARE É
-            <br />
-            CONSEQUÊNCIA.
+            SOLÇÕES
+            <br/>
+            INTELIGENTES
           </h2>
         </div>
         <div className={styles.statementCopy}>
-          <p>o essencial é entender pessoas, processos e objetivos.</p>
-          <p>
-            boas soluções vêm de boas perguntas, não de mais funcionalidades.
-          </p>
+          <li><strong>landing Pages:</strong> mais leads, menos atrito no dia a dia.</li>
+          <li><strong>automações:</strong> menos tarefas, erros e tempo perdido.</li>
+          <li><strong>sistemas:</strong> operações organizadas, integradas e escaláveis.</li>
         </div>
       </div>
     </section>
@@ -296,7 +331,12 @@ function CasesShowcase() {
                   <li key={result}>{result}</li>
                 ))}
               </ul>
-              <a className={styles.caseLink} href={caseStudy.href}>
+              <a
+                className={styles.caseLink}
+                href={caseStudy.href}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <span>VER LANDING PAGE</span>
                 <span aria-hidden="true">→</span>
               </a>
@@ -335,35 +375,6 @@ function LaboratorySection() {
   );
 }
 
-function ContactFooter() {
-  return (
-    <footer className={styles.footer}>
-      <div className={styles.footerSlogan}>
-        <span aria-hidden="true">＋</span>
-        <p>
-          VAMOS CONSTRUIR
-          <br />
-          SOLUÇÕES QUE
-          <br />
-          FAZEM SENTIDO.
-        </p>
-      </div>
-
-      <div className={styles.socials}>
-        <p className={styles.socialsLabel}>CONECTE-SE</p>
-        {contactLinks.map((link) => (
-          <a href={link.href} key={link.label}>
-            <span className={styles.socialIcon} aria-hidden="true">
-              {link.icon}
-            </span>
-            <span>{link.label}</span>
-          </a>
-        ))}
-      </div>
-    </footer>
-  );
-}
-
 function ContactSection() {
   return (
     <section className={`${styles.section} ${styles.contact}`} id="contato">
@@ -384,18 +395,18 @@ function ContactSection() {
         </h2>
         <div className={styles.contactCopy}>
           <p>
-            se o processo é lento, repetitivo ou difícil de escalar, existe uma
-            solução melhor.
-          </p>
-          <p>vamos descobrir juntos.</p>
-          <p>
-            primeira conversa: entender o cenário e ver se vale a pena. Sem
-            compromisso, só clareza.
+            mapearemos sua situação e vemos se faz sentido trabalharmos juntos.
           </p>
         </div>
+        <PrimaryCta />
       </div>
 
-      <ContactFooter />
+      <ContactFooter
+        contactLinks={contactLinks}
+        whatsappHref={whatsappUrl(
+          "Olá! Vim pelo site da Manifesto e quero construir uma solução que faça sentido para o meu negócio.",
+        )}
+      />
     </section>
   );
 }
