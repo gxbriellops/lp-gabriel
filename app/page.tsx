@@ -58,18 +58,18 @@ const caseStudies = [
   {
     number: "01",
     category: "PRODUTO DIGITAL / CONVERSÃO",
+    image: "/assets/cases/lp_2.webp",
     title: "JORNADA MAIS CURTA, DECISÃO MAIS CLARA.",
     description:
       "Uma landing page orientada à conversão, com proposta de valor direta, hierarquia objetiva e menos atrito até o contato.",
     results: ["NARRATIVA MAIS CLARA", "MENOS PASSOS ATÉ O LEAD"],
-    href: whatsappUrl(
-      "Olá! Vim pelo site da Manifesto e quero conversar sobre uma landing page mais clara e orientada à conversão.",
-    ),
+    href: "https://www.lincolnpirescorretor.com/",
     previewLabel: "CASE_01 / LANDING PAGE",
   },
   {
     number: "02",
     category: "SERVIÇOS / POSICIONAMENTO",
+    image: "",
     title: "COMPLEXIDADE TRADUZIDA EM CONFIANÇA.",
     description:
       "Reposicionamento digital para transformar um serviço técnico em uma experiência simples, confiável e pronta para gerar oportunidades.",
@@ -277,7 +277,15 @@ function ProcessTimeline() {
   );
 }
 
-function CasePreview({ label, variant }: { label: string; variant: number }) {
+function CasePreview({
+  label,
+  variant,
+  image,
+}: {
+  label: string;
+  variant: number;
+  image?: string;
+}) {
   return (
     <div className={`${styles.casePreview} ${variant === 2 ? styles.casePreviewAlt : ""}`}>
       <div className={styles.previewBrowser} aria-hidden="true">
@@ -287,17 +295,15 @@ function CasePreview({ label, variant }: { label: string; variant: number }) {
           <span />
           <p>{label}</p>
         </div>
-        <div className={styles.previewCanvas}>
-          <p>{`// ${variant === 1 ? "CONVERSÃO" : "POSICIONAMENTO"}`}</p>
-          <strong>
-            {variant === 1 ? "CLAREZA QUE CONVERTE." : "VALOR QUE SE ENTENDE."}
-          </strong>
-          <span />
-          <div>
-            <i />
-            <i />
-            <i />
-          </div>
+        <div className="relative w-full aspect-video overflow-hidden">
+          {image && (
+            <Image
+              src={image}
+              alt={`Prévia de ${label}`}
+              fill
+              className="object-cover"
+            />
+          )}
         </div>
       </div>
     </div>
@@ -318,14 +324,19 @@ function CasesShowcase() {
       <div className={styles.caseGrid}>
         {caseStudies.map((caseStudy, index) => (
           <article className={styles.caseCard} key={caseStudy.number}>
-            <CasePreview label={caseStudy.previewLabel} variant={index + 1} />
+            <CasePreview label={caseStudy.previewLabel} variant={index + 1} image={caseStudy.image} />
             <div className={styles.caseContent}>
               <div className={styles.caseMeta}>
                 <span>{caseStudy.number}</span>
                 <span>{caseStudy.category}</span>
               </div>
               <h3>{caseStudy.title}</h3>
-              <p className={styles.caseDescription}>{caseStudy.description}</p>
+              <p
+                className={styles.caseDescription}
+                style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, overflow: 'hidden' }}
+              >
+                {caseStudy.description}
+              </p>
               <ul className={styles.caseResults}>
                 {caseStudy.results.map((result) => (
                   <li key={result}>{result}</li>
