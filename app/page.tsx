@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GradientBackground } from "@/components/ui/paper-design-shader-background";
 import styles from "./page.module.css";
 import { ContactFooter } from "@/app/contact_footer";
@@ -12,6 +12,7 @@ const navigationLinks = [
 ];
 
 const whatsappNumber = "5583986080850";
+const loadingWord = "MANIFESTO";
 
 function whatsappUrl(message: string) {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -422,15 +423,107 @@ function ContactSection() {
   );
 }
 
+type IntroPhase = "loading" | "exiting" | "complete";
+
+function LoadingScreen({
+  phase,
+  visibleLetters,
+}: {
+  phase: IntroPhase;
+  visibleLetters: number;
+}) {
+  if (phase === "complete") {
+    return null;
+  }
+
+  return (
+    <div
+      className={`${styles.loadingScreen} ${phase === "exiting" ? styles.loadingScreenExit : ""}`}
+      role="status"
+      aria-label="Carregando Manifesto"
+    >
+      <div className={styles.loadingWord} aria-hidden="true">
+        {Array.from(loadingWord).map((letter, index) => (
+          <span
+            className={`${styles.loadingLetter} ${index < visibleLetters ? styles.loadingLetterVisible : ""}`}
+            key={`${letter}-${index}`}
+          >
+            {letter}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
+  const [introPhase, setIntroPhase] = useState<IntroPhase>("loading");
+  const [visibleLetters, setVisibleLetters] = useState(0);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      const reducedMotionTimer = setTimeout(() => {
+        setVisibleLetters(loadingWord.length);
+        setIntroPhase("complete");
+      }, 0);
+
+      return () => clearTimeout(reducedMotionTimer);
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const leadIn = 220;
+    const letterDelay = 95;
+    const wordCompleteAt = leadIn + (loadingWord.length - 1) * letterDelay;
+
+    document.body.style.overflow = "hidden";
+
+    Array.from(loadingWord).forEach((_, index) => {
+      timers.push(
+        setTimeout(() => {
+          setVisibleLetters(index + 1);
+        }, leadIn + index * letterDelay),
+      );
+    });
+
+    timers.push(
+      setTimeout(() => {
+        setIntroPhase("exiting");
+      }, wordCompleteAt + 520),
+    );
+
+    timers.push(
+      setTimeout(() => {
+        setIntroPhase("complete");
+        document.body.style.overflow = previousOverflow;
+      }, wordCompleteAt + 1320),
+    );
+
+    return () => {
+      timers.forEach(clearTimeout);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
+  const contentIsVisible = introPhase !== "loading";
+
   return (
     <>
-      <Header />
-      <main className={styles.page}>
-        <HeroSection />
-        <LaboratorySection />
-        <ContactSection />
-      </main>
+      <LoadingScreen phase={introPhase} visibleLetters={visibleLetters} />
+      <div
+        className={`${styles.siteShell} ${contentIsVisible ? styles.siteShellVisible : ""}`}
+      >
+        <Header />
+        <main
+          className={`${styles.page} ${contentIsVisible ? styles.pageVisible : styles.pageWaiting}`}
+        >
+          <HeroSection />
+          <LaboratorySection />
+          <ContactSection />
+        </main>
+      </div>
     </>
   );
 }
