@@ -9,15 +9,16 @@
   position: fixed;
   transform: translateY(0);
   transition:
-    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1050ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1150ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
   z-index: 1000;
 }
 
 .loadingScreenExit {
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-3%);
+  transform: translateY(-1.5%);
 }
 
 .loadingWord {
@@ -48,18 +49,18 @@
 
 .siteShell {
   opacity: 0;
-  transition: opacity 700ms ease 80ms;
+  transition: opacity 1050ms cubic-bezier(0.16, 1, 0.3, 1) 100ms;
 }
 
 .siteShellVisible {
   opacity: 1;
 }
 
-.pageWaiting {
-  transform: translateY(14px);
+.siteShell .page {
+  transform: translateY(18px);
 }
 
-.pageVisible {
+.siteShellVisible .page {
   transform: translateY(0);
 }
 
@@ -73,7 +74,7 @@
   color: var(--ink);
   overflow-x: clip;
   overflow-y: visible;
-  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .page :where(h1, h2, p) {
@@ -337,6 +338,19 @@
 .statementCopy {
   font-size: 16px;
   line-height: 1.45;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.statementCopy li {
+  position: relative;
+}
+
+.statementCopy li::before {
+  content: "•";
+  left: -18px;
+  position: absolute;
 }
 
 .statementCopy p + p {
@@ -606,12 +620,16 @@
 }
 
 .caseDescription {
+  display: -webkit-box;
   font-family: var(--font-jetbrains), monospace;
   font-size: 13px;
   line-height: 1.55;
   margin-bottom: 28px !important;
   margin-top: 24px !important;
   max-width: 510px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .caseResults {
@@ -1256,7 +1274,7 @@
   }
 
   .page,
-  .pageWaiting {
+  .siteShell .page {
     transform: none;
     transition: none;
   }

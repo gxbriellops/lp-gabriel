@@ -1,13 +1,8 @@
 import styles from "./page.module.css";
-
-type ContactLink = {
-  label: string;
-  href: string;
-  icon: React.ReactNode;
-};
+import type { ContactLink } from "./landing_types";
 
 type ContactFooterProps = {
-  contactLinks: ContactLink[];
+  contactLinks: readonly ContactLink[];
   whatsappHref: string;
 };
 
