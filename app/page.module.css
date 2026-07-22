@@ -250,7 +250,7 @@
 .heroCopy {
   font-size: 21px;
   line-height: 1.5;
-  margin-top: 44px;
+  margin-top: 26px;
   max-width: 598px;
 }
 
@@ -926,10 +926,15 @@
     margin-top: 45px;
   }
 
+  .heroLogoScene {
+    margin-top: 20px;
+    width: 126px;
+  }
+
   .heroCopy {
     font-size: 14px;
     line-height: 1.5;
-    margin-top: 43px;
+    margin-top: 24px;
     max-width: min(356px, calc(100vw - 34px));
   }
 
@@ -941,7 +946,7 @@
   .crosshair {
     height: 44px;
     left: calc(50% + 75px);
-    top: 455px;
+    top: 565px;
     width: 44px;
   }
 
@@ -1254,6 +1259,12 @@
   .pageWaiting {
     transform: none;
     transition: none;
+  }
+
+  .heroLogo,
+  .heroLogoOrbit,
+  .heroLogoScene::before {
+    animation: none;
   }
 
   .mobileMenu span,

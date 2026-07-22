@@ -63,21 +63,29 @@ const caseStudies = [
     title: "JORNADA MAIS CURTA, DECISÃO MAIS CLARA.",
     description:
       "Uma landing page orientada à conversão, com proposta de valor direta, hierarquia objetiva e menos atrito até o contato.",
-    results: ["NARRATIVA MAIS CLARA", "MENOS PASSOS ATÉ O LEAD"],
+    results: [
+      "FORMULÁRIO INTELIGENTE",
+      "CRM PERSONALIZADO",
+      "NOTIFICAÇÃO EM TEMPO REAL",
+      "MOSTRUÁRIO DE IMÓVEIS"
+    ],
     href: "https://www.lincolnpirescorretor.com/",
-    previewLabel: "CASE_01 / LANDING PAGE",
+    previewLabel: "CASE_01 / LANDING PAGE / FORMUÁRIO AUTOMATIZADO / CRM PERSONALIZADO / MOSTRUÁRIO DE IMÓVEIS",
   },
   {
     number: "02",
     category: "SERVIÇOS / POSICIONAMENTO",
-    image: "",
+    image: "/assets/cases/lp_1.webp",
     title: "COMPLEXIDADE TRADUZIDA EM CONFIANÇA.",
     description:
-      "Reposicionamento digital para transformar um serviço técnico em uma experiência simples, confiável e pronta para gerar oportunidades.",
-    results: ["MENSAGEM MAIS OBJETIVA", "MAIOR PERCEPÇÃO DE VALOR"],
-    href: whatsappUrl(
-      "Olá! Vim pelo site da Manifesto e quero conversar sobre posicionamento digital para o meu negócio.",
-    ),
+      "Posicionamento digital para transformar um serviço técnico em uma experiência simples, confiável e pronta para gerar oportunidades.",
+    results: [
+      "COPY ESTRATÉGICA",
+      "ESTRUTURA DE CONVERSÃO",
+      "IDENTIDADE PREMIUM",
+      "MAPS INTEGRADO"
+    ],
+    href: "https://www.dramaureliasilva.com/",
     previewLabel: "CASE_02 / LANDING PAGE",
   },
 ];
